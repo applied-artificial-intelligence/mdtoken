@@ -37,7 +37,7 @@ repos:
     hooks:
       - id: markdownlint
 
-  - repo: https://github.com/stefanrmmr/mdtoken
+  - repo: https://github.com/applied-artificial-intelligence/mdtoken
     rev: v1.0.0
     hooks:
       - id: markdown-token-limit
@@ -173,7 +173,7 @@ model: "gpt-4o"  # Has largest tokens
 
 **Yes!** mdtoken is:
 - **MIT Licensed** - Use commercially, modify freely
-- **Open source** - [GitHub repository](https://github.com/stefanrmmr/mdtoken)
+- **Open source** - [GitHub repository](https://github.com/applied-artificial-intelligence/mdtoken)
 - **Free forever** - No paid tiers or premium features
 - **Community-driven** - Contributions welcome
 
@@ -702,9 +702,9 @@ brew install python@3.11
 - [Examples](examples.md) - Practical usage examples
 - [Troubleshooting](troubleshooting.md) - Common issues
 - [API Documentation](api.md) - Programmatic usage
-- [GitHub Issues](https://github.com/stefanrmmr/mdtoken/issues) - Ask questions
+- [GitHub Issues](https://github.com/applied-artificial-intelligence/mdtoken/issues) - Ask questions
 
 **Contributing**:
-- Found a bug? [Report it](https://github.com/stefanrmmr/mdtoken/issues/new)
-- Have a feature idea? [Suggest it](https://github.com/stefanrmmr/mdtoken/issues/new)
+- Found a bug? [Report it](https://github.com/applied-artificial-intelligence/mdtoken/issues/new)
+- Have a feature idea? [Suggest it](https://github.com/applied-artificial-intelligence/mdtoken/issues/new)
 - Want to contribute? See [CONTRIBUTING.md](../CONTRIBUTING.md)

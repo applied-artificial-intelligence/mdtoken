@@ -362,7 +362,7 @@ pip install pre-commit
 # 2. Create .pre-commit-config.yaml
 cat > .pre-commit-config.yaml << 'EOF'
 repos:
-  - repo: https://github.com/stefanrmmr/mdtoken
+  - repo: https://github.com/applied-artificial-intelligence/mdtoken
     rev: v1.0.0
     hooks:
       - id: markdown-token-limit
@@ -382,7 +382,7 @@ pre-commit run --all-files
 ```yaml
 # Only check specific directories
 repos:
-  - repo: https://github.com/stefanrmmr/mdtoken
+  - repo: https://github.com/applied-artificial-intelligence/mdtoken
     rev: v1.0.0
     hooks:
       - id: markdown-token-limit
@@ -803,7 +803,7 @@ repos:
       - id: markdownlint
         args: ['--config', '.markdownlint.json']
 
-  - repo: https://github.com/stefanrmmr/mdtoken
+  - repo: https://github.com/applied-artificial-intelligence/mdtoken
     rev: v1.0.0
     hooks:
       - id: markdown-token-limit

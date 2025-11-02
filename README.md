@@ -1,7 +1,7 @@
 # mdtoken - Markdown Token Limit Pre-commit Hook
 
-[![Tests](https://github.com/stefanrmmr/mdtoken/actions/workflows/test.yml/badge.svg)](https://github.com/stefanrmmr/mdtoken/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/stefanrmmr/mdtoken/branch/main/graph/badge.svg)](https://codecov.io/gh/stefanrmmr/mdtoken)
+[![Tests](https://github.com/applied-artificial-intelligence/mdtoken/actions/workflows/test.yml/badge.svg)](https://github.com/applied-artificial-intelligence/mdtoken/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/applied-artificial-intelligence/mdtoken/branch/main/graph/badge.svg)](https://codecov.io/gh/applied-artificial-intelligence/mdtoken)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 
@@ -41,7 +41,7 @@ pip install mdtoken
 ### From Source (Development)
 
 ```bash
-git clone https://github.com/stefanrmmr/mdtoken.git
+git clone https://github.com/applied-artificial-intelligence/mdtoken.git
 cd mdtoken
 pip install -e .
 ```
@@ -94,7 +94,7 @@ Add to `.pre-commit-config.yaml`:
 
 ```yaml
 repos:
-  - repo: https://github.com/stefanrmmr/mdtoken
+  - repo: https://github.com/applied-artificial-intelligence/mdtoken
     rev: v1.0.0  # Use latest release tag
     hooks:
       - id: markdown-token-limit
@@ -358,7 +358,7 @@ If you're experiencing slowness:
 
 ```bash
 # Clone repository
-git clone https://github.com/stefanrmmr/mdtoken.git
+git clone https://github.com/applied-artificial-intelligence/mdtoken.git
 cd mdtoken
 
 # Create virtual environment

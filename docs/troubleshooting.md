@@ -77,7 +77,7 @@ pip install tiktoken
 **Development Installation**:
 ```bash
 # Install from source with all dependencies
-git clone https://github.com/stefanrmmr/mdtoken.git
+git clone https://github.com/applied-artificial-intelligence/mdtoken.git
 cd mdtoken
 pip install -e ".[dev]"
 ```
@@ -359,7 +359,7 @@ python -c "import yaml; yaml.safe_load(open('.mdtokenrc.yaml'))"
 2. **Specify Python environment**:
    ```yaml
    repos:
-     - repo: https://github.com/stefanrmmr/mdtoken
+     - repo: https://github.com/applied-artificial-intelligence/mdtoken
        rev: v1.0.0
        hooks:
          - id: markdown-token-limit
@@ -551,7 +551,7 @@ OSError: Failed to read file 'file.md' with encoding 'utf-8'
 **Alternative** (install from repo):
 ```yaml
 - name: Install mdtoken
-  run: pip install git+https://github.com/stefanrmmr/mdtoken.git@v1.0.0
+  run: pip install git+https://github.com/applied-artificial-intelligence/mdtoken.git@v1.0.0
 ```
 
 ---
@@ -689,7 +689,7 @@ model: "gpt-4"
 
 If you encounter issues not covered here:
 
-1. **Check existing issues**: [GitHub Issues](https://github.com/stefanrmmr/mdtoken/issues)
+1. **Check existing issues**: [GitHub Issues](https://github.com/applied-artificial-intelligence/mdtoken/issues)
 2. **Run with verbose flag**: `mdtoken check --verbose`
 3. **Check version**: `mdtoken --version`
 4. **Verify configuration**: Validate `.mdtokenrc.yaml` syntax

@@ -29,7 +29,7 @@ pip install mdtoken
 For development:
 
 ```bash
-git clone https://github.com/stefanrmmr/mdtoken.git
+git clone https://github.com/applied-artificial-intelligence/mdtoken.git
 cd mdtoken
 pip install -e .
 ```
@@ -1045,7 +1045,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 - [README](../README.md) - Overview and quick start guide
 - [Examples](examples.md) - Practical usage examples (coming soon)
 - [Configuration Guide](../README.md#configuration) - Detailed configuration options
-- [GitHub Repository](https://github.com/stefanrmmr/mdtoken) - Source code and issues
+- [GitHub Repository](https://github.com/applied-artificial-intelligence/mdtoken) - Source code and issues
 
 ---
 
