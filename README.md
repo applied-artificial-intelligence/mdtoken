@@ -277,6 +277,33 @@ docs/README.md: 5,234 tokens (limit: 4,000, over by 1,234)
 2/3 files over limit, 15,110 tokens total
 ```
 
+## Programmatic Usage
+
+For programmatic usage in Python scripts, see the [API Documentation](docs/api.md) for detailed information on:
+
+- **TokenCounter** - Count tokens in text and files
+- **Config** - Load and manage configuration
+- **LimitEnforcer** - Check files against token limits
+- **FileMatcher** - Discover and filter markdown files
+- **Reporter** - Format and display results
+
+Quick example:
+
+```python
+from mdtoken.config import Config
+from mdtoken.enforcer import LimitEnforcer
+from mdtoken.reporter import Reporter
+
+config = Config.from_file()
+enforcer = LimitEnforcer(config)
+result = enforcer.check_files()
+
+reporter = Reporter(enforcer)
+reporter.report(result, verbose=True)
+```
+
+See [docs/api.md](docs/api.md) for complete API reference with examples.
+
 ## Troubleshooting
 
 ### "Config file not found" Warning

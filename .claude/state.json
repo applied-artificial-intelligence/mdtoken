@@ -484,7 +484,7 @@
       "description": "Document public API for programmatic usage, including TokenCounter, Config, and main functions.",
       "type": "documentation",
       "phase": "Phase 5: Documentation",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-007"
       ],
@@ -738,10 +738,10 @@
     "TASK-012",
     "TASK-013",
     "TASK-014",
-    "TASK-015"
+    "TASK-015",
+    "TASK-016"
   ],
   "next_available": [
-    "TASK-016",
     "TASK-017"
   ],
   "quality_gates": [
