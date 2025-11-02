@@ -1,0 +1,658 @@
+{
+  "project": {
+    "name": "mdtoken",
+    "description": "Markdown Token Limit Pre-commit Hook - Enforce token count limits on markdown files to prevent context window bloat",
+    "version": "1.0.0",
+    "repository": "https://github.com/stefanrmmr/mdtoken",
+    "created_at": "2025-11-02T10:30:00Z",
+    "updated_at": "2025-11-02T10:45:00Z"
+  },
+  "status": "planning_complete",
+  "current_task": null,
+  "tasks": [
+    {
+      "id": "TASK-001",
+      "title": "Setup Python package structure",
+      "description": "Create foundational Python package structure with pyproject.toml, setup.py, and basic directory layout following modern Python packaging standards.",
+      "type": "foundation",
+      "phase": "Phase 1: Project Foundation",
+      "status": "pending",
+      "dependencies": [],
+      "acceptance_criteria": [
+        "pyproject.toml created with project metadata and dependencies",
+        "setup.py created for backward compatibility",
+        "src/mdtoken/ package directory created",
+        "src/mdtoken/__init__.py with version",
+        "README.md references package installation",
+        "Package can be installed with 'pip install -e .'"
+      ],
+      "files_to_create": [
+        "pyproject.toml",
+        "setup.py",
+        "src/mdtoken/__init__.py",
+        "src/mdtoken/__version__.py"
+      ],
+      "estimated_hours": 2,
+      "priority": "critical",
+      "labels": ["foundation", "packaging"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-002",
+      "title": "Setup development environment",
+      "description": "Configure development tools including virtual environment, dependencies, linting (ruff/black), type checking (mypy), and development scripts.",
+      "type": "foundation",
+      "phase": "Phase 1: Project Foundation",
+      "status": "pending",
+      "dependencies": ["TASK-001"],
+      "acceptance_criteria": [
+        "requirements.txt with core dependencies (tiktoken, PyYAML, click)",
+        "requirements-dev.txt with development dependencies (pytest, black, ruff, mypy)",
+        "Makefile or justfile with common commands (test, lint, format)",
+        ".python-version file specifying Python 3.8+",
+        "Virtual environment can be created and activated",
+        "All dev tools run without errors on empty project"
+      ],
+      "files_to_create": [
+        "requirements.txt",
+        "requirements-dev.txt",
+        "Makefile",
+        ".python-version"
+      ],
+      "estimated_hours": 2,
+      "priority": "high",
+      "labels": ["foundation", "devtools"]
+    },
+    {
+      "id": "TASK-003",
+      "title": "Create basic CLI skeleton",
+      "description": "Implement basic command-line interface structure using click/argparse with placeholder commands and help text.",
+      "type": "foundation",
+      "phase": "Phase 1: Project Foundation",
+      "status": "pending",
+      "dependencies": ["TASK-001", "TASK-002"],
+      "acceptance_criteria": [
+        "src/mdtoken/cli.py created with main() entry point",
+        "'mdtoken --version' shows version",
+        "'mdtoken --help' shows usage information",
+        "'mdtoken check' command exists (placeholder)",
+        "Entry point configured in pyproject.toml",
+        "CLI can be invoked after 'pip install -e .'"
+      ],
+      "files_to_create": [
+        "src/mdtoken/cli.py",
+        "src/mdtoken/commands/__init__.py",
+        "src/mdtoken/commands/check.py"
+      ],
+      "estimated_hours": 2,
+      "priority": "high",
+      "labels": ["foundation", "cli"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-004",
+      "title": "Implement token counting engine",
+      "description": "Create core token counting functionality using tiktoken library with cl100k_base encoding. Handle file reading, encoding, and token calculation.",
+      "type": "feature",
+      "phase": "Phase 2: Core Implementation",
+      "status": "pending",
+      "dependencies": ["TASK-003"],
+      "acceptance_criteria": [
+        "TokenCounter class created in src/mdtoken/counter.py",
+        "count_tokens(text: str) -> int method implemented",
+        "count_file_tokens(path: Path) -> int method implemented",
+        "Uses tiktoken with cl100k_base encoding",
+        "Handles UTF-8 files correctly",
+        "Performance: counts 10K tokens in < 100ms",
+        "Unit tests with known token counts pass"
+      ],
+      "files_to_create": [
+        "src/mdtoken/counter.py",
+        "tests/test_counter.py"
+      ],
+      "estimated_hours": 3,
+      "priority": "critical",
+      "labels": ["core", "tokenization"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-005",
+      "title": "Implement configuration loader",
+      "description": "Create configuration loading and validation from .mdtokenrc.yaml with schema validation and sensible defaults.",
+      "type": "feature",
+      "phase": "Phase 2: Core Implementation",
+      "status": "pending",
+      "dependencies": ["TASK-003"],
+      "acceptance_criteria": [
+        "Config class created in src/mdtoken/config.py",
+        "Loads .mdtokenrc.yaml from current directory or --config path",
+        "Validates schema (default_limit, limits dict, exclude patterns, total_limit, fail_on_exceed)",
+        "Provides sensible defaults if config missing",
+        "Returns clear error messages for invalid YAML",
+        "Config merges with defaults correctly",
+        "Unit tests for valid and invalid configs"
+      ],
+      "files_to_create": [
+        "src/mdtoken/config.py",
+        "src/mdtoken/schema.py",
+        "tests/test_config.py",
+        "tests/fixtures/valid_config.yaml",
+        "tests/fixtures/invalid_config.yaml"
+      ],
+      "estimated_hours": 4,
+      "priority": "critical",
+      "labels": ["core", "configuration"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-006",
+      "title": "Implement file matching logic",
+      "description": "Create file discovery and filtering using glob patterns, exclude patterns, and path matching from configuration.",
+      "type": "feature",
+      "phase": "Phase 2: Core Implementation",
+      "status": "pending",
+      "dependencies": ["TASK-005"],
+      "acceptance_criteria": [
+        "FileMatcher class created in src/mdtoken/matcher.py",
+        "Finds markdown files matching glob patterns",
+        "Excludes files matching exclude patterns",
+        "Handles per-file limit specifications from config",
+        "Supports recursive directory traversal",
+        "Ignores .git/, node_modules/, and common exclusions by default",
+        "Returns list of (filepath, limit) tuples",
+        "Unit tests with various glob patterns"
+      ],
+      "files_to_create": [
+        "src/mdtoken/matcher.py",
+        "tests/test_matcher.py"
+      ],
+      "estimated_hours": 3,
+      "priority": "high",
+      "labels": ["core", "file-matching"]
+    },
+    {
+      "id": "TASK-007",
+      "title": "Implement limit enforcement and reporting",
+      "description": "Create limit checking logic with clear violation reporting, suggestions, and exit code handling.",
+      "type": "feature",
+      "phase": "Phase 2: Core Implementation",
+      "status": "pending",
+      "dependencies": ["TASK-004", "TASK-005", "TASK-006"],
+      "acceptance_criteria": [
+        "LimitEnforcer class created in src/mdtoken/enforcer.py",
+        "Checks each file against its configured limit",
+        "Tracks total token count against total_limit",
+        "Generates clear violation messages with actual vs limit",
+        "Provides actionable suggestions (split file, move to archive, compress)",
+        "Returns structured results (pass/fail, violations list)",
+        "Respects fail_on_exceed flag for exit codes",
+        "Unit tests for various violation scenarios"
+      ],
+      "files_to_create": [
+        "src/mdtoken/enforcer.py",
+        "src/mdtoken/reporter.py",
+        "tests/test_enforcer.py"
+      ],
+      "estimated_hours": 4,
+      "priority": "critical",
+      "labels": ["core", "enforcement"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-008",
+      "title": "Create pre-commit hook definition",
+      "description": "Define pre-commit hook configuration following pre-commit framework conventions with proper entry point and arguments.",
+      "type": "integration",
+      "phase": "Phase 3: Pre-commit Integration",
+      "status": "pending",
+      "dependencies": ["TASK-007"],
+      "acceptance_criteria": [
+        ".pre-commit-hooks.yaml created at repository root",
+        "Hook ID: markdown-token-limit",
+        "Entry point: mdtoken check",
+        "Language: python",
+        "Files regex: \\.md$",
+        "Pass filenames: true",
+        "Args: [--config=.mdtokenrc.yaml]",
+        "Hook validates with 'pre-commit validate-config'"
+      ],
+      "files_to_create": [
+        ".pre-commit-hooks.yaml"
+      ],
+      "estimated_hours": 1,
+      "priority": "high",
+      "labels": ["integration", "pre-commit"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-009",
+      "title": "Implement pre-commit hook script",
+      "description": "Integrate CLI with pre-commit framework, handling file arguments passed by pre-commit and providing appropriate exit codes.",
+      "type": "integration",
+      "phase": "Phase 3: Pre-commit Integration",
+      "status": "pending",
+      "dependencies": ["TASK-008"],
+      "acceptance_criteria": [
+        "CLI accepts file paths as positional arguments",
+        "When invoked by pre-commit, checks only staged .md files",
+        "Returns exit code 0 for pass, 1 for violations",
+        "Handles --dry-run flag (exit 0 even on violations)",
+        "Works with 'pre-commit try-repo' for local testing",
+        "Integration test with actual .pre-commit-config.yaml"
+      ],
+      "files_to_create": [
+        "tests/test_pre_commit_integration.py",
+        "tests/fixtures/.pre-commit-config.yaml"
+      ],
+      "estimated_hours": 2,
+      "priority": "high",
+      "labels": ["integration", "pre-commit"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-010",
+      "title": "Write comprehensive unit tests",
+      "description": "Create unit tests for all core modules with >80% code coverage using pytest.",
+      "type": "testing",
+      "phase": "Phase 4: Testing & Quality",
+      "status": "pending",
+      "dependencies": ["TASK-007"],
+      "acceptance_criteria": [
+        "Unit tests for counter.py (token counting edge cases)",
+        "Unit tests for config.py (valid/invalid YAML, defaults)",
+        "Unit tests for matcher.py (glob patterns, excludes)",
+        "Unit tests for enforcer.py (violations, reporting)",
+        "Test coverage >80% (measured with pytest-cov)",
+        "All tests pass with pytest",
+        "Tests run in < 5 seconds"
+      ],
+      "files_to_create": [
+        "tests/conftest.py",
+        "tests/test_integration.py"
+      ],
+      "estimated_hours": 4,
+      "priority": "critical",
+      "labels": ["testing", "quality"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-011",
+      "title": "Write integration tests",
+      "description": "Create end-to-end integration tests simulating real git workflows with pre-commit hooks.",
+      "type": "testing",
+      "phase": "Phase 4: Testing & Quality",
+      "status": "pending",
+      "dependencies": ["TASK-009", "TASK-010"],
+      "acceptance_criteria": [
+        "Integration tests with temporary git repositories",
+        "Test: commit passes when files under limit",
+        "Test: commit fails when files exceed limit",
+        "Test: dry-run mode doesn't fail commits",
+        "Test: exclude patterns work correctly",
+        "Test: total_limit enforcement works",
+        "Integration tests pass consistently"
+      ],
+      "files_to_create": [
+        "tests/integration/test_git_workflow.py",
+        "tests/integration/fixtures/"
+      ],
+      "estimated_hours": 3,
+      "priority": "high",
+      "labels": ["testing", "integration"]
+    },
+    {
+      "id": "TASK-012",
+      "title": "Edge case and error handling tests",
+      "description": "Test edge cases, error conditions, and graceful degradation scenarios.",
+      "type": "testing",
+      "phase": "Phase 4: Testing & Quality",
+      "status": "pending",
+      "dependencies": ["TASK-010"],
+      "acceptance_criteria": [
+        "Test: empty markdown files",
+        "Test: binary files mistakenly matched",
+        "Test: files with UTF-8 encoding issues",
+        "Test: missing config file (uses defaults)",
+        "Test: invalid YAML (clear error message)",
+        "Test: very large files (>1MB)",
+        "Test: files with no extension",
+        "All edge cases handled gracefully with clear errors"
+      ],
+      "files_to_create": [
+        "tests/test_edge_cases.py",
+        "tests/fixtures/edge_cases/"
+      ],
+      "estimated_hours": 2,
+      "priority": "medium",
+      "labels": ["testing", "edge-cases"]
+    },
+    {
+      "id": "TASK-013",
+      "title": "Performance benchmarks",
+      "description": "Create performance tests ensuring < 1 second execution for typical projects (5-10 files).",
+      "type": "testing",
+      "phase": "Phase 4: Testing & Quality",
+      "status": "pending",
+      "dependencies": ["TASK-010"],
+      "acceptance_criteria": [
+        "Benchmark test for 5 files (< 500ms)",
+        "Benchmark test for 10 files (< 1000ms)",
+        "Benchmark test for 100 files (< 5000ms)",
+        "Performance tests run in CI",
+        "Results logged for tracking over time",
+        "No performance regressions detected"
+      ],
+      "files_to_create": [
+        "tests/test_performance.py",
+        "tests/fixtures/performance/"
+      ],
+      "estimated_hours": 2,
+      "priority": "medium",
+      "labels": ["testing", "performance"]
+    },
+    {
+      "id": "TASK-014",
+      "title": "Setup CI/CD with GitHub Actions",
+      "description": "Configure GitHub Actions for automated testing, linting, and quality checks on every push and PR.",
+      "type": "infrastructure",
+      "phase": "Phase 4: Testing & Quality",
+      "status": "pending",
+      "dependencies": ["TASK-010"],
+      "acceptance_criteria": [
+        ".github/workflows/test.yml created",
+        "Tests run on Python 3.8, 3.9, 3.10, 3.11, 3.12",
+        "Linting with ruff/black runs",
+        "Type checking with mypy runs",
+        "Coverage report generated and uploaded",
+        "Workflow runs on push and pull_request events",
+        "Badge added to README.md"
+      ],
+      "files_to_create": [
+        ".github/workflows/test.yml",
+        ".github/workflows/lint.yml"
+      ],
+      "estimated_hours": 1,
+      "priority": "high",
+      "labels": ["infrastructure", "ci-cd"]
+    },
+    {
+      "id": "TASK-015",
+      "title": "Write comprehensive README",
+      "description": "Create detailed README.md with installation, usage, configuration, examples, and troubleshooting.",
+      "type": "documentation",
+      "phase": "Phase 5: Documentation",
+      "status": "pending",
+      "dependencies": ["TASK-009"],
+      "acceptance_criteria": [
+        "Project description and problem statement",
+        "Features list with checkmarks",
+        "Installation instructions (pip install mdtoken)",
+        "Usage examples (CLI and pre-commit)",
+        "Configuration guide with .mdtokenrc.yaml examples",
+        "Troubleshooting section with common issues",
+        "Contributing guidelines reference",
+        "License badge and information",
+        "CI/CD status badges"
+      ],
+      "files_to_modify": [
+        "README.md"
+      ],
+      "estimated_hours": 3,
+      "priority": "critical",
+      "labels": ["documentation"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-016",
+      "title": "Write API documentation",
+      "description": "Document public API for programmatic usage, including TokenCounter, Config, and main functions.",
+      "type": "documentation",
+      "phase": "Phase 5: Documentation",
+      "status": "pending",
+      "dependencies": ["TASK-007"],
+      "acceptance_criteria": [
+        "API documentation in docs/api.md",
+        "Docstrings for all public classes and methods",
+        "Usage examples for programmatic API",
+        "Type hints on all public functions",
+        "Sphinx-compatible docstrings (optional for v1.0)",
+        "API reference linked from README"
+      ],
+      "files_to_create": [
+        "docs/api.md"
+      ],
+      "estimated_hours": 2,
+      "priority": "medium",
+      "labels": ["documentation", "api"]
+    },
+    {
+      "id": "TASK-017",
+      "title": "Create usage examples and troubleshooting guide",
+      "description": "Write practical examples, common use cases, and troubleshooting guide for users.",
+      "type": "documentation",
+      "phase": "Phase 5: Documentation",
+      "status": "pending",
+      "dependencies": ["TASK-015"],
+      "acceptance_criteria": [
+        "docs/examples.md with 5+ practical examples",
+        "Example configurations for different project types",
+        "Common error messages and solutions",
+        "FAQ section with 10+ questions",
+        "Migration guide from manual token checking",
+        "Best practices for setting token limits"
+      ],
+      "files_to_create": [
+        "docs/examples.md",
+        "docs/troubleshooting.md",
+        "docs/faq.md"
+      ],
+      "estimated_hours": 1,
+      "priority": "medium",
+      "labels": ["documentation", "examples"]
+    },
+    {
+      "id": "TASK-018",
+      "title": "Prepare PyPI packaging",
+      "description": "Configure package for PyPI distribution with proper metadata, classifiers, and build configuration.",
+      "type": "release",
+      "phase": "Phase 6: Release Preparation",
+      "status": "pending",
+      "dependencies": ["TASK-001", "TASK-014", "TASK-015"],
+      "acceptance_criteria": [
+        "pyproject.toml has complete metadata (description, keywords, classifiers)",
+        "LICENSE file is MIT",
+        "MANIFEST.in includes necessary files",
+        "Long description uses README.md",
+        "Build with 'python -m build' succeeds",
+        "Package can be installed from dist/",
+        "TestPyPI upload works"
+      ],
+      "files_to_create": [
+        "MANIFEST.in"
+      ],
+      "files_to_modify": [
+        "pyproject.toml"
+      ],
+      "estimated_hours": 2,
+      "priority": "high",
+      "labels": ["release", "packaging"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-019",
+      "title": "Setup GitHub repository",
+      "description": "Create and configure GitHub repository with proper settings, topics, and repository structure.",
+      "type": "release",
+      "phase": "Phase 6: Release Preparation",
+      "status": "pending",
+      "dependencies": ["TASK-015"],
+      "acceptance_criteria": [
+        "Repository created at stefanrmmr/mdtoken",
+        "Repository description set",
+        "Topics added (pre-commit, markdown, tokens, ai-tools)",
+        "Branch protection rules configured",
+        "Issue templates created",
+        "Pull request template created",
+        "Code of conduct added"
+      ],
+      "files_to_create": [
+        ".github/ISSUE_TEMPLATE/bug_report.md",
+        ".github/ISSUE_TEMPLATE/feature_request.md",
+        ".github/pull_request_template.md",
+        "CODE_OF_CONDUCT.md"
+      ],
+      "estimated_hours": 1,
+      "priority": "high",
+      "labels": ["release", "github"]
+    },
+    {
+      "id": "TASK-020",
+      "title": "Write contributing guidelines",
+      "description": "Create comprehensive CONTRIBUTING.md with development setup, testing, and PR guidelines.",
+      "type": "documentation",
+      "phase": "Phase 6: Release Preparation",
+      "status": "pending",
+      "dependencies": ["TASK-002", "TASK-014"],
+      "acceptance_criteria": [
+        "CONTRIBUTING.md created",
+        "Development setup instructions",
+        "How to run tests locally",
+        "Code style guidelines (ruff/black)",
+        "PR submission guidelines",
+        "Commit message conventions",
+        "How to add new features",
+        "Contact information for questions"
+      ],
+      "files_to_create": [
+        "CONTRIBUTING.md"
+      ],
+      "estimated_hours": 2,
+      "priority": "medium",
+      "labels": ["documentation", "contributing"]
+    },
+    {
+      "id": "TASK-021",
+      "title": "Create CHANGELOG and version tagging",
+      "description": "Initialize CHANGELOG.md following Keep a Changelog format and prepare for v1.0.0 release.",
+      "type": "release",
+      "phase": "Phase 6: Release Preparation",
+      "status": "pending",
+      "dependencies": ["TASK-010", "TASK-015", "TASK-018"],
+      "acceptance_criteria": [
+        "CHANGELOG.md created with v1.0.0 entry",
+        "All v1.0.0 features documented",
+        "Version in __version__.py is 1.0.0",
+        "Git tag v1.0.0 created",
+        "Tag includes release notes",
+        "Version matches across all files"
+      ],
+      "files_to_create": [
+        "CHANGELOG.md"
+      ],
+      "files_to_modify": [
+        "src/mdtoken/__version__.py"
+      ],
+      "estimated_hours": 1,
+      "priority": "high",
+      "labels": ["release", "versioning"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-022",
+      "title": "Publish to PyPI",
+      "description": "Upload package to PyPI and verify installation from public package index.",
+      "type": "release",
+      "phase": "Phase 6: Release Preparation",
+      "status": "pending",
+      "dependencies": ["TASK-018", "TASK-021"],
+      "acceptance_criteria": [
+        "Package uploaded to PyPI",
+        "Package page shows correct metadata",
+        "README renders correctly on PyPI",
+        "'pip install mdtoken' works from PyPI",
+        "Installed version matches 1.0.0",
+        "All classifiers display correctly",
+        "Project URLs work (GitHub, issues, docs)"
+      ],
+      "estimated_hours": 2,
+      "priority": "critical",
+      "labels": ["release", "pypi"],
+      "on_critical_path": true
+    },
+    {
+      "id": "TASK-023",
+      "title": "Create GitHub release and announcement",
+      "description": "Create official v1.0.0 GitHub release with assets and announce on relevant platforms.",
+      "type": "release",
+      "phase": "Phase 6: Release Preparation",
+      "status": "pending",
+      "dependencies": ["TASK-022"],
+      "acceptance_criteria": [
+        "GitHub release v1.0.0 created",
+        "Release notes from CHANGELOG included",
+        "Distribution assets attached (wheel, sdist)",
+        "Release marked as 'Latest'",
+        "Social media announcement drafted",
+        "Project added to pre-commit.com hooks registry (if applicable)",
+        "Announcement on relevant Reddit/HN/etc (optional)"
+      ],
+      "estimated_hours": 2,
+      "priority": "medium",
+      "labels": ["release", "announcement"]
+    }
+  ],
+  "completed_tasks": [],
+  "next_available": ["TASK-001"],
+  "quality_gates": [
+    {
+      "name": "Foundation Complete",
+      "after_task": "TASK-003",
+      "criteria": [
+        "Project builds and installs with pip",
+        "CLI can be invoked",
+        "Development tools configured"
+      ]
+    },
+    {
+      "name": "Core Implementation Complete",
+      "after_task": "TASK-007",
+      "criteria": [
+        "Token counting accurate (verified with test files)",
+        "Configuration loading works",
+        "Limit enforcement produces correct violations"
+      ]
+    },
+    {
+      "name": "Testing Complete",
+      "after_task": "TASK-014",
+      "criteria": [
+        "Test coverage >80%",
+        "All tests passing",
+        "CI/CD green",
+        "Performance benchmarks met"
+      ]
+    },
+    {
+      "name": "Release Ready",
+      "after_task": "TASK-021",
+      "criteria": [
+        "Documentation complete",
+        "PyPI packaging validated",
+        "CHANGELOG current",
+        "All quality gates passed"
+      ]
+    }
+  ],
+  "timeline": {
+    "total_estimated_hours": 52,
+    "calendar_estimate_weeks": "2-4 weeks",
+    "pace_assumption": "20-30 hours/week",
+    "critical_path_hours": 32
+  },
+  "notes": [
+    "MVP scope: v1.0.0 includes core functionality only",
+    "Deferred to v1.1+: Auto-fix, token caching, parallel processing, GitHub Action",
+    "First open-source release - quality gates are critical",
+    "Hybrid workflow: Factory .claude/ during development, convert to GitHub issues before public release"
+  ]
+}
