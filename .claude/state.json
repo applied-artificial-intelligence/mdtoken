@@ -7,7 +7,7 @@
     "created_at": "2025-11-02T10:30:00Z",
     "updated_at": "2025-11-02T10:45:00Z"
   },
-  "status": "planning_complete",
+  "status": "implementing",
   "current_task": null,
   "tasks": [
     {
@@ -16,7 +16,7 @@
       "description": "Create foundational Python package structure with pyproject.toml, setup.py, and basic directory layout following modern Python packaging standards.",
       "type": "foundation",
       "phase": "Phase 1: Project Foundation",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [],
       "acceptance_criteria": [
         "pyproject.toml created with project metadata and dependencies",
@@ -34,7 +34,10 @@
       ],
       "estimated_hours": 2,
       "priority": "critical",
-      "labels": ["foundation", "packaging"],
+      "labels": [
+        "foundation",
+        "packaging"
+      ],
       "on_critical_path": true
     },
     {
@@ -44,7 +47,9 @@
       "type": "foundation",
       "phase": "Phase 1: Project Foundation",
       "status": "pending",
-      "dependencies": ["TASK-001"],
+      "dependencies": [
+        "TASK-001"
+      ],
       "acceptance_criteria": [
         "requirements.txt with core dependencies (tiktoken, PyYAML, click)",
         "requirements-dev.txt with development dependencies (pytest, black, ruff, mypy)",
@@ -61,7 +66,10 @@
       ],
       "estimated_hours": 2,
       "priority": "high",
-      "labels": ["foundation", "devtools"]
+      "labels": [
+        "foundation",
+        "devtools"
+      ]
     },
     {
       "id": "TASK-003",
@@ -70,7 +78,10 @@
       "type": "foundation",
       "phase": "Phase 1: Project Foundation",
       "status": "pending",
-      "dependencies": ["TASK-001", "TASK-002"],
+      "dependencies": [
+        "TASK-001",
+        "TASK-002"
+      ],
       "acceptance_criteria": [
         "src/mdtoken/cli.py created with main() entry point",
         "'mdtoken --version' shows version",
@@ -86,7 +97,10 @@
       ],
       "estimated_hours": 2,
       "priority": "high",
-      "labels": ["foundation", "cli"],
+      "labels": [
+        "foundation",
+        "cli"
+      ],
       "on_critical_path": true
     },
     {
@@ -96,7 +110,9 @@
       "type": "feature",
       "phase": "Phase 2: Core Implementation",
       "status": "pending",
-      "dependencies": ["TASK-003"],
+      "dependencies": [
+        "TASK-003"
+      ],
       "acceptance_criteria": [
         "TokenCounter class created in src/mdtoken/counter.py",
         "count_tokens(text: str) -> int method implemented",
@@ -112,7 +128,10 @@
       ],
       "estimated_hours": 3,
       "priority": "critical",
-      "labels": ["core", "tokenization"],
+      "labels": [
+        "core",
+        "tokenization"
+      ],
       "on_critical_path": true
     },
     {
@@ -122,7 +141,9 @@
       "type": "feature",
       "phase": "Phase 2: Core Implementation",
       "status": "pending",
-      "dependencies": ["TASK-003"],
+      "dependencies": [
+        "TASK-003"
+      ],
       "acceptance_criteria": [
         "Config class created in src/mdtoken/config.py",
         "Loads .mdtokenrc.yaml from current directory or --config path",
@@ -141,7 +162,10 @@
       ],
       "estimated_hours": 4,
       "priority": "critical",
-      "labels": ["core", "configuration"],
+      "labels": [
+        "core",
+        "configuration"
+      ],
       "on_critical_path": true
     },
     {
@@ -151,7 +175,9 @@
       "type": "feature",
       "phase": "Phase 2: Core Implementation",
       "status": "pending",
-      "dependencies": ["TASK-005"],
+      "dependencies": [
+        "TASK-005"
+      ],
       "acceptance_criteria": [
         "FileMatcher class created in src/mdtoken/matcher.py",
         "Finds markdown files matching glob patterns",
@@ -168,7 +194,10 @@
       ],
       "estimated_hours": 3,
       "priority": "high",
-      "labels": ["core", "file-matching"]
+      "labels": [
+        "core",
+        "file-matching"
+      ]
     },
     {
       "id": "TASK-007",
@@ -177,7 +206,11 @@
       "type": "feature",
       "phase": "Phase 2: Core Implementation",
       "status": "pending",
-      "dependencies": ["TASK-004", "TASK-005", "TASK-006"],
+      "dependencies": [
+        "TASK-004",
+        "TASK-005",
+        "TASK-006"
+      ],
       "acceptance_criteria": [
         "LimitEnforcer class created in src/mdtoken/enforcer.py",
         "Checks each file against its configured limit",
@@ -195,7 +228,10 @@
       ],
       "estimated_hours": 4,
       "priority": "critical",
-      "labels": ["core", "enforcement"],
+      "labels": [
+        "core",
+        "enforcement"
+      ],
       "on_critical_path": true
     },
     {
@@ -205,7 +241,9 @@
       "type": "integration",
       "phase": "Phase 3: Pre-commit Integration",
       "status": "pending",
-      "dependencies": ["TASK-007"],
+      "dependencies": [
+        "TASK-007"
+      ],
       "acceptance_criteria": [
         ".pre-commit-hooks.yaml created at repository root",
         "Hook ID: markdown-token-limit",
@@ -221,7 +259,10 @@
       ],
       "estimated_hours": 1,
       "priority": "high",
-      "labels": ["integration", "pre-commit"],
+      "labels": [
+        "integration",
+        "pre-commit"
+      ],
       "on_critical_path": true
     },
     {
@@ -231,7 +272,9 @@
       "type": "integration",
       "phase": "Phase 3: Pre-commit Integration",
       "status": "pending",
-      "dependencies": ["TASK-008"],
+      "dependencies": [
+        "TASK-008"
+      ],
       "acceptance_criteria": [
         "CLI accepts file paths as positional arguments",
         "When invoked by pre-commit, checks only staged .md files",
@@ -246,7 +289,10 @@
       ],
       "estimated_hours": 2,
       "priority": "high",
-      "labels": ["integration", "pre-commit"],
+      "labels": [
+        "integration",
+        "pre-commit"
+      ],
       "on_critical_path": true
     },
     {
@@ -256,7 +302,9 @@
       "type": "testing",
       "phase": "Phase 4: Testing & Quality",
       "status": "pending",
-      "dependencies": ["TASK-007"],
+      "dependencies": [
+        "TASK-007"
+      ],
       "acceptance_criteria": [
         "Unit tests for counter.py (token counting edge cases)",
         "Unit tests for config.py (valid/invalid YAML, defaults)",
@@ -272,7 +320,10 @@
       ],
       "estimated_hours": 4,
       "priority": "critical",
-      "labels": ["testing", "quality"],
+      "labels": [
+        "testing",
+        "quality"
+      ],
       "on_critical_path": true
     },
     {
@@ -282,7 +333,10 @@
       "type": "testing",
       "phase": "Phase 4: Testing & Quality",
       "status": "pending",
-      "dependencies": ["TASK-009", "TASK-010"],
+      "dependencies": [
+        "TASK-009",
+        "TASK-010"
+      ],
       "acceptance_criteria": [
         "Integration tests with temporary git repositories",
         "Test: commit passes when files under limit",
@@ -298,7 +352,10 @@
       ],
       "estimated_hours": 3,
       "priority": "high",
-      "labels": ["testing", "integration"]
+      "labels": [
+        "testing",
+        "integration"
+      ]
     },
     {
       "id": "TASK-012",
@@ -307,7 +364,9 @@
       "type": "testing",
       "phase": "Phase 4: Testing & Quality",
       "status": "pending",
-      "dependencies": ["TASK-010"],
+      "dependencies": [
+        "TASK-010"
+      ],
       "acceptance_criteria": [
         "Test: empty markdown files",
         "Test: binary files mistakenly matched",
@@ -324,7 +383,10 @@
       ],
       "estimated_hours": 2,
       "priority": "medium",
-      "labels": ["testing", "edge-cases"]
+      "labels": [
+        "testing",
+        "edge-cases"
+      ]
     },
     {
       "id": "TASK-013",
@@ -333,7 +395,9 @@
       "type": "testing",
       "phase": "Phase 4: Testing & Quality",
       "status": "pending",
-      "dependencies": ["TASK-010"],
+      "dependencies": [
+        "TASK-010"
+      ],
       "acceptance_criteria": [
         "Benchmark test for 5 files (< 500ms)",
         "Benchmark test for 10 files (< 1000ms)",
@@ -348,7 +412,10 @@
       ],
       "estimated_hours": 2,
       "priority": "medium",
-      "labels": ["testing", "performance"]
+      "labels": [
+        "testing",
+        "performance"
+      ]
     },
     {
       "id": "TASK-014",
@@ -357,7 +424,9 @@
       "type": "infrastructure",
       "phase": "Phase 4: Testing & Quality",
       "status": "pending",
-      "dependencies": ["TASK-010"],
+      "dependencies": [
+        "TASK-010"
+      ],
       "acceptance_criteria": [
         ".github/workflows/test.yml created",
         "Tests run on Python 3.8, 3.9, 3.10, 3.11, 3.12",
@@ -373,7 +442,10 @@
       ],
       "estimated_hours": 1,
       "priority": "high",
-      "labels": ["infrastructure", "ci-cd"]
+      "labels": [
+        "infrastructure",
+        "ci-cd"
+      ]
     },
     {
       "id": "TASK-015",
@@ -382,7 +454,9 @@
       "type": "documentation",
       "phase": "Phase 5: Documentation",
       "status": "pending",
-      "dependencies": ["TASK-009"],
+      "dependencies": [
+        "TASK-009"
+      ],
       "acceptance_criteria": [
         "Project description and problem statement",
         "Features list with checkmarks",
@@ -399,7 +473,9 @@
       ],
       "estimated_hours": 3,
       "priority": "critical",
-      "labels": ["documentation"],
+      "labels": [
+        "documentation"
+      ],
       "on_critical_path": true
     },
     {
@@ -409,7 +485,9 @@
       "type": "documentation",
       "phase": "Phase 5: Documentation",
       "status": "pending",
-      "dependencies": ["TASK-007"],
+      "dependencies": [
+        "TASK-007"
+      ],
       "acceptance_criteria": [
         "API documentation in docs/api.md",
         "Docstrings for all public classes and methods",
@@ -423,7 +501,10 @@
       ],
       "estimated_hours": 2,
       "priority": "medium",
-      "labels": ["documentation", "api"]
+      "labels": [
+        "documentation",
+        "api"
+      ]
     },
     {
       "id": "TASK-017",
@@ -432,7 +513,9 @@
       "type": "documentation",
       "phase": "Phase 5: Documentation",
       "status": "pending",
-      "dependencies": ["TASK-015"],
+      "dependencies": [
+        "TASK-015"
+      ],
       "acceptance_criteria": [
         "docs/examples.md with 5+ practical examples",
         "Example configurations for different project types",
@@ -448,7 +531,10 @@
       ],
       "estimated_hours": 1,
       "priority": "medium",
-      "labels": ["documentation", "examples"]
+      "labels": [
+        "documentation",
+        "examples"
+      ]
     },
     {
       "id": "TASK-018",
@@ -457,7 +543,11 @@
       "type": "release",
       "phase": "Phase 6: Release Preparation",
       "status": "pending",
-      "dependencies": ["TASK-001", "TASK-014", "TASK-015"],
+      "dependencies": [
+        "TASK-001",
+        "TASK-014",
+        "TASK-015"
+      ],
       "acceptance_criteria": [
         "pyproject.toml has complete metadata (description, keywords, classifiers)",
         "LICENSE file is MIT",
@@ -475,7 +565,10 @@
       ],
       "estimated_hours": 2,
       "priority": "high",
-      "labels": ["release", "packaging"],
+      "labels": [
+        "release",
+        "packaging"
+      ],
       "on_critical_path": true
     },
     {
@@ -485,7 +578,9 @@
       "type": "release",
       "phase": "Phase 6: Release Preparation",
       "status": "pending",
-      "dependencies": ["TASK-015"],
+      "dependencies": [
+        "TASK-015"
+      ],
       "acceptance_criteria": [
         "Repository created at stefanrmmr/mdtoken",
         "Repository description set",
@@ -503,7 +598,10 @@
       ],
       "estimated_hours": 1,
       "priority": "high",
-      "labels": ["release", "github"]
+      "labels": [
+        "release",
+        "github"
+      ]
     },
     {
       "id": "TASK-020",
@@ -512,7 +610,10 @@
       "type": "documentation",
       "phase": "Phase 6: Release Preparation",
       "status": "pending",
-      "dependencies": ["TASK-002", "TASK-014"],
+      "dependencies": [
+        "TASK-002",
+        "TASK-014"
+      ],
       "acceptance_criteria": [
         "CONTRIBUTING.md created",
         "Development setup instructions",
@@ -528,7 +629,10 @@
       ],
       "estimated_hours": 2,
       "priority": "medium",
-      "labels": ["documentation", "contributing"]
+      "labels": [
+        "documentation",
+        "contributing"
+      ]
     },
     {
       "id": "TASK-021",
@@ -537,7 +641,11 @@
       "type": "release",
       "phase": "Phase 6: Release Preparation",
       "status": "pending",
-      "dependencies": ["TASK-010", "TASK-015", "TASK-018"],
+      "dependencies": [
+        "TASK-010",
+        "TASK-015",
+        "TASK-018"
+      ],
       "acceptance_criteria": [
         "CHANGELOG.md created with v1.0.0 entry",
         "All v1.0.0 features documented",
@@ -554,7 +662,10 @@
       ],
       "estimated_hours": 1,
       "priority": "high",
-      "labels": ["release", "versioning"],
+      "labels": [
+        "release",
+        "versioning"
+      ],
       "on_critical_path": true
     },
     {
@@ -564,7 +675,10 @@
       "type": "release",
       "phase": "Phase 6: Release Preparation",
       "status": "pending",
-      "dependencies": ["TASK-018", "TASK-021"],
+      "dependencies": [
+        "TASK-018",
+        "TASK-021"
+      ],
       "acceptance_criteria": [
         "Package uploaded to PyPI",
         "Package page shows correct metadata",
@@ -576,7 +690,10 @@
       ],
       "estimated_hours": 2,
       "priority": "critical",
-      "labels": ["release", "pypi"],
+      "labels": [
+        "release",
+        "pypi"
+      ],
       "on_critical_path": true
     },
     {
@@ -586,7 +703,9 @@
       "type": "release",
       "phase": "Phase 6: Release Preparation",
       "status": "pending",
-      "dependencies": ["TASK-022"],
+      "dependencies": [
+        "TASK-022"
+      ],
       "acceptance_criteria": [
         "GitHub release v1.0.0 created",
         "Release notes from CHANGELOG included",
@@ -598,11 +717,18 @@
       ],
       "estimated_hours": 2,
       "priority": "medium",
-      "labels": ["release", "announcement"]
+      "labels": [
+        "release",
+        "announcement"
+      ]
     }
   ],
-  "completed_tasks": [],
-  "next_available": ["TASK-001"],
+  "completed_tasks": [
+    "TASK-001"
+  ],
+  "next_available": [
+    "TASK-002"
+  ],
   "quality_gates": [
     {
       "name": "Foundation Complete",
@@ -654,5 +780,6 @@
     "Deferred to v1.1+: Auto-fix, token caching, parallel processing, GitHub Action",
     "First open-source release - quality gates are critical",
     "Hybrid workflow: Factory .claude/ during development, convert to GitHub issues before public release"
-  ]
+  ],
+  "updated_at": "2025-11-02T11:25:04.531091Z"
 }
