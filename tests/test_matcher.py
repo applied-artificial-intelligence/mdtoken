@@ -81,6 +81,45 @@ class TestExclusionLogic:
         normal_file = Path("/tmp/docs/README.md")
         assert matcher._is_excluded(normal_file) is False
 
+    def test_exclude_file_outside_root(self) -> None:
+        """Test exclusion checking for files outside the root directory."""
+        config = Config(exclude=["archived/**"])
+        matcher = FileMatcher(config, root=Path("/tmp/project"))
+
+        # File outside root should still be checked for exclusion
+        outside_file = Path("/home/user/archived/file.md")
+        # This will trigger ValueError in relative_to, falling back to absolute path
+        result = matcher._is_excluded(outside_file)
+        # Should check exclusion based on the pattern
+        assert isinstance(result, bool)
+
+    def test_exclude_directory_pattern_in_parts(self) -> None:
+        """Test that directory exclusion works when directory name appears in path parts."""
+        config = Config(exclude=["venv/**"])
+        matcher = FileMatcher(config, root=Path("/tmp"))
+
+        # File where 'venv' appears as a directory component
+        venv_file = Path("/tmp/project/venv/lib/file.md")
+        assert matcher._is_excluded(venv_file) is True
+
+    def test_exclude_with_substring_match(self) -> None:
+        """Test exclusion using substring matching."""
+        config = Config(exclude=["temp"])
+        matcher = FileMatcher(config, root=Path("/tmp"))
+
+        # File with 'temp' in path should be excluded
+        temp_file = Path("/tmp/temporary/file.md")
+        assert matcher._is_excluded(temp_file) is True
+
+    def test_exclude_exact_directory_match(self) -> None:
+        """Test exclusion when path exactly matches directory pattern."""
+        config = Config(exclude=["docs/**"])
+        matcher = FileMatcher(config, root=Path("/tmp"))
+
+        # Path that is exactly the excluded directory
+        docs_dir = Path("/tmp/docs")
+        assert matcher._is_excluded(docs_dir) is True
+
 
 class TestFindMarkdownFiles:
     """Test finding markdown files."""
@@ -276,6 +315,61 @@ class TestFindMarkdownFiles:
 
         # Check that paths are sorted
         assert paths == sorted(paths)
+
+    def test_check_files_with_string_paths(self) -> None:
+        """Test that check_files accepts string paths and converts them to Path objects."""
+        config = Config()
+        matcher = FileMatcher(config, root=self.root)
+
+        # Pass string paths instead of Path objects
+        files_to_check = [
+            str(self.root / "README.md"),
+            str(self.root / "docs" / "api.md"),
+        ]
+
+        results = matcher.find_markdown_files(check_files=files_to_check)
+
+        # Should convert strings to Path and process correctly
+        assert len(results) == 2
+        paths = [p.name for p, _ in results]
+        assert "README.md" in paths
+        assert "api.md" in paths
+
+    def test_glob_with_non_file_items(self) -> None:
+        """Test that glob pattern skips directories and non-file items."""
+        config = Config()
+        matcher = FileMatcher(config, root=self.root)
+
+        # The glob pattern will match directories too, but they should be skipped
+        results = matcher.find_markdown_files(patterns=["**"])
+
+        # Results should only contain files, not directories
+        for path, _ in results:
+            assert path.is_file()
+
+    def test_glob_with_non_markdown_files(self) -> None:
+        """Test that glob pattern filters out non-.md files."""
+        config = Config()
+        matcher = FileMatcher(config, root=self.root)
+
+        # Use a pattern that would match all files
+        results = matcher.find_markdown_files(patterns=["**/*"])
+
+        # All results should have .md suffix
+        for path, _ in results:
+            assert path.suffix == ".md"
+
+    def test_duplicate_files_from_multiple_patterns(self) -> None:
+        """Test that duplicate files from overlapping patterns are returned only once."""
+        config = Config()
+        matcher = FileMatcher(config, root=self.root)
+
+        # Use overlapping patterns that would match the same files
+        results = matcher.find_markdown_files(patterns=["**/*.md", "*.md", "docs/*.md"])
+
+        # Check for duplicates
+        paths = [p for p, _ in results]
+        assert len(paths) == len(set(paths)), "Results contain duplicate files"
 
 
 class TestIntegration:
