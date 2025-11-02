@@ -1,0 +1,28 @@
+# Include package metadata and documentation
+include LICENSE
+include README.md
+include pyproject.toml
+include .pre-commit-hooks.yaml
+
+# Include documentation
+recursive-include docs *.md
+
+# Exclude development and build artifacts
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude *$py.class
+global-exclude *.so
+global-exclude .DS_Store
+
+# Exclude tests and CI files
+prune tests
+prune .github
+prune .claude
+
+# Exclude configuration files
+exclude .gitignore
+exclude .python-version
+exclude Makefile
+exclude coverage.json
+exclude .coverage
+exclude htmlcov
