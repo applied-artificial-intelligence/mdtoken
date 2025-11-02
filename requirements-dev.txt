@@ -1,0 +1,20 @@
+# Development dependencies for mdtoken
+-r requirements.txt
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pytest-mock>=3.10.0
+
+# Code quality
+black>=23.0.0
+ruff>=0.1.0
+mypy>=1.0.0
+types-PyYAML
+
+# Build and distribution
+build>=0.10.0
+twine>=4.0.0
+
+# Pre-commit hooks (optional)
+pre-commit>=3.0.0

@@ -1,0 +1,4 @@
+# Core dependencies for mdtoken
+tiktoken>=0.5.0
+PyYAML>=6.0
+click>=8.0.0
