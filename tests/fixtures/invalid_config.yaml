@@ -1,0 +1,7 @@
+# Invalid mdtoken configuration - negative default_limit
+default_limit: -1000
+
+limits:
+  "docs/README.md": 5000
+
+fail_on_exceed: true

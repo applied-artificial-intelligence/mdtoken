@@ -1,0 +1,2 @@
+# Minimal configuration - only override default_limit
+default_limit: 3000

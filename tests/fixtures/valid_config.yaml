@@ -1,0 +1,18 @@
+# Valid mdtoken configuration
+default_limit: 5000
+
+limits:
+  "docs/README.md": 8000
+  "docs/api.md": 6000
+  "*.md": 4000
+
+exclude:
+  - ".git/**"
+  - "node_modules/**"
+  - "venv/**"
+  - "build/**"
+  - "archived/**/*.md"
+
+total_limit: 50000
+
+fail_on_exceed: true

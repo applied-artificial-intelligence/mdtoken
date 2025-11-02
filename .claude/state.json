@@ -140,7 +140,7 @@
       "description": "Create configuration loading and validation from .mdtokenrc.yaml with schema validation and sensible defaults.",
       "type": "feature",
       "phase": "Phase 2: Core Implementation",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-003"
       ],
@@ -727,11 +727,12 @@
     "TASK-001",
     "TASK-002",
     "TASK-003",
-    "TASK-004"
+    "TASK-004",
+    "TASK-005"
   ],
   "next_available": [
-    "TASK-005",
-    "TASK-006"
+    "TASK-006",
+    "TASK-007"
   ],
   "quality_gates": [
     {

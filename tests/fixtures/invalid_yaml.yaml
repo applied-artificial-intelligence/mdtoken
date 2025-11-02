@@ -1,0 +1,6 @@
+# Invalid YAML syntax
+default_limit: 5000
+limits:
+  - this is not valid
+  - yaml structure
+  broken: [unclosed list
