@@ -2,36 +2,57 @@
 from pathlib import Path
 from typing import List, Optional
 
+from mdtoken.config import Config, ConfigError
+from mdtoken.enforcer import LimitEnforcer
+from mdtoken.reporter import Reporter
+
 
 def check_files(
-    files: List[str],
-    config_path: str = '.mdtokenrc.yaml',
-    dry_run: bool = False
+    files: Optional[List[str]] = None,
+    config_path: str = ".mdtokenrc.yaml",
+    dry_run: bool = False,
+    verbose: bool = False,
 ) -> int:
-    """
-    Check markdown files against token count limits.
+    """Check markdown files against token count limits.
 
     Args:
-        files: List of file paths to check
+        files: List of file paths to check (None to check all)
         config_path: Path to configuration file
         dry_run: If True, don't fail on violations
+        verbose: Show detailed suggestions
 
     Returns:
         Exit code: 0 for success, 1 for violations
     """
-    # Placeholder implementation
-    # Will be replaced with actual token counting logic in TASK-004-007
+    try:
+        # Load configuration
+        config = Config.from_file(Path(config_path) if config_path else None)
 
-    print(f"Checking {len(files) if files else 0} files...")
-    print(f"Using config: {config_path}")
+        # Override fail_on_exceed if dry_run
+        if dry_run:
+            config.fail_on_exceed = False
 
-    if dry_run:
-        print("Dry run mode: will not fail on violations")
+        # Create enforcer and reporter
+        enforcer = LimitEnforcer(config)
+        reporter = Reporter(enforcer=enforcer)
 
-    # TODO: Implement actual checking logic
-    # 1. Load configuration (TASK-005)
-    # 2. Match files if none provided (TASK-006)
-    # 3. Count tokens for each file (TASK-004)
-    # 4. Enforce limits and report violations (TASK-007)
+        # Convert file strings to Path objects if provided
+        check_files_list = None
+        if files:
+            check_files_list = [Path(f) for f in files]
 
-    return 0
+        # Check files
+        result = enforcer.check_files(check_files=check_files_list)
+
+        # Report results
+        reporter.report(result, verbose=verbose)
+
+        # Return exit code
+        return reporter.get_exit_code(result, config.fail_on_exceed)
+
+    except ConfigError as e:
+        print(f"Configuration error: {e}")
+        return 1
+    except Exception as e:
+        print(f"Error: {e}")
+        return 1

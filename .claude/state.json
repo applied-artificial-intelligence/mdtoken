@@ -240,7 +240,7 @@
       "description": "Define pre-commit hook configuration following pre-commit framework conventions with proper entry point and arguments.",
       "type": "integration",
       "phase": "Phase 3: Pre-commit Integration",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-007"
       ],
@@ -730,10 +730,11 @@
     "TASK-004",
     "TASK-005",
     "TASK-006",
-    "TASK-007"
+    "TASK-007",
+    "TASK-008"
   ],
   "next_available": [
-    "TASK-008"
+    "TASK-009"
   ],
   "quality_gates": [
     {

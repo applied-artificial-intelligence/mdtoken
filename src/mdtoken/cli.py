@@ -29,25 +29,21 @@ def main(ctx, version):
 @click.argument('files', nargs=-1, type=click.Path(exists=True))
 @click.option('--config', default='.mdtokenrc.yaml', help='Path to configuration file')
 @click.option('--dry-run', is_flag=True, help='Check files without failing on violations')
-def check(files, config, dry_run):
-    """
-    Check markdown files against token count limits.
+@click.option('--verbose', '-v', is_flag=True, help='Show detailed suggestions for violations')
+def check(files, config, dry_run, verbose):
+    """Check markdown files against token count limits.
 
     FILES: Markdown files to check. If none provided, uses glob patterns from config.
     """
-    click.echo(f"mdtoken check (placeholder implementation)")
-    click.echo(f"Config: {config}")
-    click.echo(f"Dry run: {dry_run}")
+    from mdtoken.commands.check import check_files
 
-    if files:
-        click.echo(f"Files to check: {len(files)}")
-        for file in files:
-            click.echo(f"  - {file}")
-    else:
-        click.echo("No files provided - would use config glob patterns")
-
-    click.echo("\nThis is a placeholder. Full implementation coming soon.")
-    return 0
+    exit_code = check_files(
+        files=list(files) if files else None,
+        config_path=config,
+        dry_run=dry_run,
+        verbose=verbose,
+    )
+    sys.exit(exit_code)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,8 @@
+- id: markdown-token-limit
+  name: Markdown Token Limit
+  description: Check markdown files against token count limits
+  entry: mdtoken check
+  language: python
+  files: \.md$
+  pass_filenames: true
+  args: []
