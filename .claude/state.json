@@ -271,7 +271,7 @@
       "description": "Integrate CLI with pre-commit framework, handling file arguments passed by pre-commit and providing appropriate exit codes.",
       "type": "integration",
       "phase": "Phase 3: Pre-commit Integration",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-008"
       ],
@@ -731,10 +731,11 @@
     "TASK-005",
     "TASK-006",
     "TASK-007",
-    "TASK-008"
+    "TASK-008",
+    "TASK-009"
   ],
   "next_available": [
-    "TASK-009"
+    "TASK-010"
   ],
   "quality_gates": [
     {

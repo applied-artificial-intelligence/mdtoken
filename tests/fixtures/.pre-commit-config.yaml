@@ -1,0 +1,20 @@
+# Example .pre-commit-config.yaml for mdtoken
+# This is a reference configuration showing how to use mdtoken in your project
+
+repos:
+  - repo: https://github.com/stefanrmmr/mdtoken
+    rev: v1.0.0  # Use the latest version
+    hooks:
+      - id: markdown-token-limit
+        # Optional: customize with args
+        # args: ['--config=custom-config.yaml']
+
+  # Example: using mdtoken locally during development
+  - repo: local
+    hooks:
+      - id: markdown-token-limit-local
+        name: Markdown Token Limit (Local)
+        entry: mdtoken check
+        language: system
+        files: \.md$
+        pass_filenames: true
