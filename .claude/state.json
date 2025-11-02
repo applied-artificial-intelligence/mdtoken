@@ -363,7 +363,7 @@
       "description": "Test edge cases, error conditions, and graceful degradation scenarios.",
       "type": "testing",
       "phase": "Phase 4: Testing & Quality",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-010"
       ],
@@ -735,10 +735,10 @@
     "TASK-009",
     "TASK-010",
     "TASK-011",
+    "TASK-012",
     "TASK-014"
   ],
   "next_available": [
-    "TASK-012",
     "TASK-013",
     "TASK-015"
   ],
