@@ -512,7 +512,7 @@
       "description": "Write practical examples, common use cases, and troubleshooting guide for users.",
       "type": "documentation",
       "phase": "Phase 5: Documentation",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-015"
       ],
@@ -739,10 +739,13 @@
     "TASK-013",
     "TASK-014",
     "TASK-015",
-    "TASK-016"
+    "TASK-016",
+    "TASK-017"
   ],
   "next_available": [
-    "TASK-017"
+    "TASK-018",
+    "TASK-019",
+    "TASK-020"
   ],
   "quality_gates": [
     {

@@ -304,6 +304,13 @@ reporter.report(result, verbose=True)
 
 See [docs/api.md](docs/api.md) for complete API reference with examples.
 
+## Documentation
+
+- **[API Reference](docs/api.md)** - Complete API documentation for programmatic usage
+- **[Usage Examples](docs/examples.md)** - Project-specific configurations and workflows
+- **[Troubleshooting](docs/troubleshooting.md)** - Common issues and solutions
+- **[FAQ](docs/faq.md)** - Frequently asked questions
+
 ## Troubleshooting
 
 ### "Config file not found" Warning
