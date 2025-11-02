@@ -174,7 +174,7 @@
       "description": "Create file discovery and filtering using glob patterns, exclude patterns, and path matching from configuration.",
       "type": "feature",
       "phase": "Phase 2: Core Implementation",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-005"
       ],
@@ -728,10 +728,10 @@
     "TASK-002",
     "TASK-003",
     "TASK-004",
-    "TASK-005"
+    "TASK-005",
+    "TASK-006"
   ],
   "next_available": [
-    "TASK-006",
     "TASK-007"
   ],
   "quality_gates": [
