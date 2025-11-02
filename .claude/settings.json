@@ -1,0 +1,48 @@
+{
+  "extraKnownMarketplaces": {
+    "local": {
+      "source": {
+        "source": "directory",
+        "path": "/home/stefan/agents/plugins"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "system@local": true,
+    "workflow@local": true,
+    "memory@local": true,
+    "development@local": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(pytest:*)",
+      "Bash(ruff:*)",
+      "Bash(mypy:*)",
+      "Bash(black:*)",
+      "Bash(git:*)",
+      "Bash(python:*)",
+      "Bash(make:*)",
+      "Read(*.py)",
+      "Read(*.md)",
+      "Read(*.toml)",
+      "Read(*.txt)",
+      "Read(*.yaml)",
+      "Read(*.yml)",
+      "Write(src/**/*.py)",
+      "Write(tests/**/*.py)",
+      "Write(docs/**/*.md)",
+      "Edit(src/**/*.py)",
+      "Edit(tests/**/*.py)",
+      "Edit(docs/**/*.md)",
+      "Edit(*.md)",
+      "mcp__serena__*",
+      "mcp__context7__*"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(sudo:*)",
+      "Write(*.toml)",
+      "Edit(*.toml)"
+    ]
+  }
+}
