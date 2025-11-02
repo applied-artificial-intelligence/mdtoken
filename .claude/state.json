@@ -109,7 +109,7 @@
       "description": "Create core token counting functionality using tiktoken library with cl100k_base encoding. Handle file reading, encoding, and token calculation.",
       "type": "feature",
       "phase": "Phase 2: Core Implementation",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-003"
       ],
@@ -726,10 +726,12 @@
   "completed_tasks": [
     "TASK-001",
     "TASK-002",
-    "TASK-003"
+    "TASK-003",
+    "TASK-004"
   ],
   "next_available": [
-    "TASK-004"
+    "TASK-005",
+    "TASK-006"
   ],
   "quality_gates": [
     {
