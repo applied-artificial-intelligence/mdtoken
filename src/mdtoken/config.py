@@ -72,7 +72,9 @@ class Config:
             ConfigError: If configuration values are invalid
         """
         if not isinstance(self.default_limit, int) or self.default_limit <= 0:
-            raise ConfigError(f"default_limit must be a positive integer, got: {self.default_limit}")
+            raise ConfigError(
+                f"default_limit must be a positive integer, got: {self.default_limit}"
+            )
 
         if not isinstance(self.limits, dict):
             raise ConfigError(f"limits must be a dictionary, got: {type(self.limits).__name__}")

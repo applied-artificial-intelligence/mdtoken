@@ -423,7 +423,7 @@
       "description": "Configure GitHub Actions for automated testing, linting, and quality checks on every push and PR.",
       "type": "infrastructure",
       "phase": "Phase 4: Testing & Quality",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-010"
       ],
@@ -733,13 +733,14 @@
     "TASK-007",
     "TASK-008",
     "TASK-009",
-    "TASK-010"
+    "TASK-010",
+    "TASK-014"
   ],
   "next_available": [
     "TASK-011",
     "TASK-012",
     "TASK-013",
-    "TASK-014"
+    "TASK-015"
   ],
   "quality_gates": [
     {

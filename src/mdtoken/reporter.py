@@ -1,7 +1,7 @@
 """Reporting and output formatting for mdtoken."""
 
-from typing import List, TextIO
 import sys
+from typing import TextIO
 
 from mdtoken.enforcer import EnforcementResult, LimitEnforcer, Violation
 
@@ -97,9 +97,7 @@ class Reporter:
         if result.total_limit_exceeded:
             self._print_total_limit_violation(result)
 
-    def _print_violation(
-        self, violation: Violation, number: int, verbose: bool
-    ) -> None:
+    def _print_violation(self, violation: Violation, number: int, verbose: bool) -> None:
         """Print details for a single violation.
 
         Args:

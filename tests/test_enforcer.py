@@ -4,8 +4,6 @@ import tempfile
 from io import StringIO
 from pathlib import Path
 
-import pytest
-
 from mdtoken.config import Config
 from mdtoken.counter import TokenCounter
 from mdtoken.enforcer import EnforcementResult, LimitEnforcer, Violation
@@ -73,9 +71,7 @@ class TestEnforcementResult:
 
     def test_passed_result(self) -> None:
         """Test result with no violations."""
-        result = EnforcementResult(
-            passed=True, total_files=3, total_tokens=10000, violations=[]
-        )
+        result = EnforcementResult(passed=True, total_files=3, total_tokens=10000, violations=[])
 
         assert result.passed is True
         assert result.violation_count == 0
@@ -285,9 +281,7 @@ class TestReporter:
         output = StringIO()
         reporter = Reporter(output=output, use_color=False)
 
-        result = EnforcementResult(
-            passed=True, total_files=3, total_tokens=10000, violations=[]
-        )
+        result = EnforcementResult(passed=True, total_files=3, total_tokens=10000, violations=[])
 
         reporter.report(result)
         output_text = output.getvalue()
@@ -337,9 +331,7 @@ class TestReporter:
         """Test exit code for passing check."""
         reporter = Reporter(use_color=False)
 
-        result = EnforcementResult(
-            passed=True, total_files=3, total_tokens=10000, violations=[]
-        )
+        result = EnforcementResult(passed=True, total_files=3, total_tokens=10000, violations=[])
 
         assert reporter.get_exit_code(result, fail_on_exceed=True) == 0
         assert reporter.get_exit_code(result, fail_on_exceed=False) == 0
@@ -371,9 +363,7 @@ class TestReporter:
         """Test one-line summary for passing check."""
         reporter = Reporter(use_color=False)
 
-        result = EnforcementResult(
-            passed=True, total_files=3, total_tokens=10000, violations=[]
-        )
+        result = EnforcementResult(passed=True, total_files=3, total_tokens=10000, violations=[])
 
         summary = reporter.format_summary_line(result)
 

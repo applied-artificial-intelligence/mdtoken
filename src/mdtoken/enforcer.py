@@ -123,7 +123,7 @@ class LimitEnforcer:
                     violations.append(
                         Violation(file_path=file_path, actual_tokens=token_count, limit=limit)
                     )
-            except Exception as e:
+            except Exception:
                 # If we can't count tokens, treat as a violation
                 violations.append(
                     Violation(

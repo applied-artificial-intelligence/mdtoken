@@ -3,8 +3,6 @@
 import tempfile
 from pathlib import Path
 
-import pytest
-
 from mdtoken.config import Config
 from mdtoken.matcher import FileMatcher
 
@@ -213,7 +211,7 @@ class TestFindMarkdownFiles:
         assert results_dict.get("README.md") == 8000
 
         # Check api.md has custom limit
-        api_results = [(p, l) for p, l in results if p.name == "api.md"]
+        api_results = [(p, limit) for p, limit in results if p.name == "api.md"]
         if api_results:
             assert api_results[0][1] == 6000
 

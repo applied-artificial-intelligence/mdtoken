@@ -267,7 +267,8 @@ class TestConfigIntegration:
         """Test complete workflow: create, save, load, use."""
         # Create a temporary config file
         with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
-            f.write("""
+            f.write(
+                """
 default_limit: 3500
 limits:
   "docs/README.md": 7000
@@ -275,7 +276,8 @@ exclude:
   - "archived/**"
 total_limit: 40000
 fail_on_exceed: false
-""")
+"""
+            )
             temp_path = Path(f.name)
 
         try:

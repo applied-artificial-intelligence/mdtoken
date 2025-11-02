@@ -4,8 +4,6 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-import pytest
-
 
 class TestCLIIntegration:
     """Test CLI behavior when invoked by pre-commit."""
@@ -113,9 +111,7 @@ class TestCLIIntegration:
     def test_cli_with_config_option(self) -> None:
         """Test CLI respects --config option."""
         # Create custom config
-        with tempfile.NamedTemporaryFile(
-            mode="w", suffix=".yaml", delete=False
-        ) as config_file:
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as config_file:
             config_file.write("default_limit: 10\n")  # Very strict limit
             config_path = Path(config_file.name)
 

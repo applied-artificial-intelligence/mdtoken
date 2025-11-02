@@ -1,9 +1,8 @@
 """File matching and discovery logic for mdtoken."""
 
+from fnmatch import fnmatch
 from pathlib import Path
 from typing import List, Tuple
-
-from fnmatch import fnmatch
 
 from mdtoken.config import Config
 

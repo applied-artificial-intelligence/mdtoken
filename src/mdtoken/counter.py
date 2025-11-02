@@ -1,7 +1,6 @@
 """Token counting functionality using tiktoken library."""
 
 from pathlib import Path
-from typing import Optional
 
 import tiktoken
 
@@ -67,16 +66,14 @@ class TokenCounter:
             raise FileNotFoundError(f"File not found: {path}")
 
         if not path.is_file():
-            raise IOError(f"Not a regular file: {path}")
+            raise OSError(f"Not a regular file: {path}")
 
         try:
             text = path.read_text(encoding=encoding)
         except UnicodeDecodeError as e:
-            raise IOError(
-                f"Failed to read file '{path}' with encoding '{encoding}': {e}"
-            ) from e
+            raise OSError(f"Failed to read file '{path}' with encoding '{encoding}': {e}") from e
         except Exception as e:
-            raise IOError(f"Failed to read file '{path}': {e}") from e
+            raise OSError(f"Failed to read file '{path}': {e}") from e
 
         return self.count_tokens(text)
 
