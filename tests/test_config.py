@@ -297,3 +297,129 @@ fail_on_exceed: false
             assert data["default_limit"] == 3500
         finally:
             temp_path.unlink()
+
+
+class TestConfigEncoding:
+    """Test encoding and model configuration."""
+
+    def test_default_encoding(self) -> None:
+        """Test Config initializes with default encoding."""
+        config = Config()
+        assert config.encoding == "cl100k_base"
+
+    def test_explicit_encoding(self) -> None:
+        """Test Config accepts explicit encoding parameter."""
+        config = Config(encoding="o200k_base")
+        assert config.encoding == "o200k_base"
+
+    def test_model_to_encoding_gpt4(self) -> None:
+        """Test model parameter resolves to correct encoding for GPT-4."""
+        config = Config(model="gpt-4")
+        assert config.encoding == "cl100k_base"
+
+    def test_model_to_encoding_gpt4o(self) -> None:
+        """Test model parameter resolves to correct encoding for GPT-4o."""
+        config = Config(model="gpt-4o")
+        assert config.encoding == "o200k_base"
+
+    def test_model_to_encoding_codex(self) -> None:
+        """Test model parameter resolves to correct encoding for Codex."""
+        config = Config(model="codex")
+        assert config.encoding == "p50k_base"
+
+    def test_model_to_encoding_claude(self) -> None:
+        """Test model parameter resolves to encoding for Claude."""
+        config = Config(model="claude-3.5")
+        assert config.encoding == "cl100k_base"
+
+    def test_encoding_takes_precedence_over_model(self) -> None:
+        """Test that explicit encoding overrides model parameter."""
+        config = Config(encoding="o200k_base", model="gpt-4")
+        assert config.encoding == "o200k_base"  # encoding wins, not model's cl100k_base
+
+    def test_invalid_model_raises_error(self) -> None:
+        """Test that unknown model raises ConfigError with helpful message."""
+        with pytest.raises(ConfigError) as exc_info:
+            Config(model="unknown-model")
+
+        error_msg = str(exc_info.value)
+        assert "Unknown model 'unknown-model'" in error_msg
+        assert "Available models:" in error_msg
+        assert "gpt-4" in error_msg
+
+    def test_empty_encoding_raises_error(self) -> None:
+        """Test that empty encoding string raises ConfigError."""
+        with pytest.raises(ConfigError, match="encoding must be a non-empty string"):
+            Config(encoding="")
+
+    def test_encoding_in_to_dict(self) -> None:
+        """Test that encoding is included in to_dict output."""
+        config = Config(encoding="o200k_base")
+        data = config.to_dict()
+        assert data["encoding"] == "o200k_base"
+
+    def test_encoding_in_repr(self) -> None:
+        """Test that encoding appears in string representation."""
+        config = Config(encoding="o200k_base")
+        repr_str = repr(config)
+        assert "encoding=o200k_base" in repr_str
+
+    def test_encoding_from_yaml_file(self) -> None:
+        """Test loading encoding from YAML configuration file."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
+            f.write("""
+default_limit: 4000
+encoding: o200k_base
+""")
+            temp_path = Path(f.name)
+
+        try:
+            config = Config.from_file(temp_path)
+            assert config.encoding == "o200k_base"
+        finally:
+            temp_path.unlink()
+
+    def test_model_from_yaml_file(self) -> None:
+        """Test loading model from YAML configuration file."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
+            f.write("""
+default_limit: 4000
+model: gpt-4o
+""")
+            temp_path = Path(f.name)
+
+        try:
+            config = Config.from_file(temp_path)
+            assert config.encoding == "o200k_base"
+        finally:
+            temp_path.unlink()
+
+    def test_encoding_overrides_model_in_yaml(self) -> None:
+        """Test that encoding takes precedence over model in YAML."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
+            f.write("""
+default_limit: 4000
+model: gpt-4
+encoding: o200k_base
+""")
+            temp_path = Path(f.name)
+
+        try:
+            config = Config.from_file(temp_path)
+            assert config.encoding == "o200k_base"  # encoding wins
+        finally:
+            temp_path.unlink()
+
+    def test_yaml_without_encoding_uses_default(self) -> None:
+        """Test that YAML without encoding/model uses default."""
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".yaml", delete=False) as f:
+            f.write("""
+default_limit: 5000
+""")
+            temp_path = Path(f.name)
+
+        try:
+            config = Config.from_file(temp_path)
+            assert config.encoding == "cl100k_base"  # default
+        finally:
+            temp_path.unlink()

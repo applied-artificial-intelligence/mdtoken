@@ -89,7 +89,7 @@ class LimitEnforcer:
             matcher: File matcher (creates default if not provided)
         """
         self.config = config
-        self.counter = counter or TokenCounter()
+        self.counter = counter or TokenCounter(encoding_name=config.encoding)
         self.matcher = matcher or FileMatcher(config)
 
     def check_files(

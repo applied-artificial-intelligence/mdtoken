@@ -21,7 +21,21 @@ class Config:
         exclude: Glob patterns for files to exclude from checking
         total_limit: Optional total token limit across all files
         fail_on_exceed: Whether to fail (exit 1) when limits are exceeded
+        encoding: Tiktoken encoding name to use for token counting
     """
+
+    # Model name to tiktoken encoding mapping
+    MODEL_ENCODING_MAP = {
+        "gpt-4": "cl100k_base",
+        "gpt-4o": "o200k_base",
+        "gpt-3.5-turbo": "cl100k_base",
+        "claude-3": "cl100k_base",  # Claude uses similar tokenization
+        "claude-3.5": "cl100k_base",
+        "codex": "p50k_base",
+        "text-davinci-003": "p50k_base",
+        "text-davinci-002": "p50k_base",
+        "gpt-3": "r50k_base",
+    }
 
     # Default configuration values
     DEFAULT_CONFIG = {
@@ -38,6 +52,7 @@ class Config:
         ],
         "total_limit": None,
         "fail_on_exceed": True,
+        "encoding": "cl100k_base",
     }
 
     def __init__(
@@ -47,6 +62,8 @@ class Config:
         exclude: Optional[List[str]] = None,
         total_limit: Optional[int] = None,
         fail_on_exceed: bool = True,
+        encoding: Optional[str] = None,
+        model: Optional[str] = None,
     ) -> None:
         """Initialize configuration.
 
@@ -56,6 +73,9 @@ class Config:
             exclude: Glob patterns for files to exclude
             total_limit: Optional total token limit across all files
             fail_on_exceed: Whether to fail when limits are exceeded
+            encoding: Tiktoken encoding name (e.g., "cl100k_base")
+            model: Model name for user-friendly config (e.g., "gpt-4")
+                   If both encoding and model are provided, encoding takes precedence
         """
         self.default_limit = default_limit
         self.limits = limits or {}
@@ -63,7 +83,38 @@ class Config:
         self.total_limit = total_limit
         self.fail_on_exceed = fail_on_exceed
 
+        # Handle encoding/model parameter
+        if encoding is not None:
+            self.encoding = encoding
+        elif model is not None:
+            # Translate model to encoding
+            self.encoding = self._resolve_model_encoding(model)
+        else:
+            self.encoding = self.DEFAULT_CONFIG["encoding"]  # type: ignore
+
         self._validate()
+
+    def _resolve_model_encoding(self, model: str) -> str:
+        """Resolve model name to tiktoken encoding name.
+
+        Args:
+            model: Model name (e.g., "gpt-4", "claude-3.5")
+
+        Returns:
+            Corresponding tiktoken encoding name
+
+        Raises:
+            ConfigError: If model is not recognized
+        """
+        if model in self.MODEL_ENCODING_MAP:
+            return self.MODEL_ENCODING_MAP[model]
+
+        # Provide helpful error with available models
+        available = ", ".join(sorted(self.MODEL_ENCODING_MAP.keys()))
+        raise ConfigError(
+            f"Unknown model '{model}'. Available models: {available}. "
+            f"Or specify 'encoding' directly (e.g., 'cl100k_base')."
+        )
 
     def _validate(self) -> None:
         """Validate configuration values.
@@ -97,6 +148,11 @@ class Config:
         if not isinstance(self.fail_on_exceed, bool):
             raise ConfigError(
                 f"fail_on_exceed must be a boolean, got: {type(self.fail_on_exceed).__name__}"
+            )
+
+        if not isinstance(self.encoding, str) or not self.encoding:
+            raise ConfigError(
+                f"encoding must be a non-empty string, got: {self.encoding}"
             )
 
     @classmethod
@@ -141,9 +197,14 @@ class Config:
                 f"Config file must contain a YAML dictionary, got: {type(data).__name__}"
             )
 
-        # Merge with defaults
+        # Merge with defaults (but handle encoding/model specially)
         config_dict = cls.DEFAULT_CONFIG.copy()
         config_dict.update(data)
+
+        # For encoding/model: only use from config_dict if explicitly in YAML
+        # Otherwise pass None to let __init__ handle defaults
+        encoding_param = data.get("encoding") if "encoding" in data else None
+        model_param = data.get("model") if "model" in data else None
 
         # Create Config instance
         try:
@@ -153,6 +214,8 @@ class Config:
                 exclude=config_dict.get("exclude", cls.DEFAULT_CONFIG["exclude"]),
                 total_limit=config_dict.get("total_limit"),
                 fail_on_exceed=config_dict.get("fail_on_exceed", True),
+                encoding=encoding_param,
+                model=model_param,
             )
         except ConfigError:
             raise
@@ -195,6 +258,7 @@ class Config:
             "exclude": self.exclude,
             "total_limit": self.total_limit,
             "fail_on_exceed": self.fail_on_exceed,
+            "encoding": self.encoding,
         }
 
     def __repr__(self) -> str:
@@ -204,5 +268,6 @@ class Config:
             f"limits={self.limits}, "
             f"exclude={self.exclude}, "
             f"total_limit={self.total_limit}, "
-            f"fail_on_exceed={self.fail_on_exceed})"
+            f"fail_on_exceed={self.fail_on_exceed}, "
+            f"encoding={self.encoding})"
         )

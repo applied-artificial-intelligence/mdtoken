@@ -383,3 +383,31 @@ class TestReporter:
 
         assert "1/2 files over limit" in summary
         assert "9,000 tokens" in summary
+
+
+class TestEnforcerEncoding:
+    """Test that enforcer uses encoding from config."""
+
+    def test_enforcer_uses_config_encoding(self) -> None:
+        """Test that LimitEnforcer passes config encoding to TokenCounter."""
+        config = Config(encoding="o200k_base")
+        enforcer = LimitEnforcer(config)
+
+        # Verify that the counter was created with the correct encoding
+        assert enforcer.counter.encoding_name == "o200k_base"
+
+    def test_enforcer_uses_model_encoding(self) -> None:
+        """Test that LimitEnforcer works with model-based config."""
+        config = Config(model="gpt-4o")
+        enforcer = LimitEnforcer(config)
+
+        # Model gpt-4o should resolve to o200k_base encoding
+        assert enforcer.counter.encoding_name == "o200k_base"
+
+    def test_enforcer_default_encoding(self) -> None:
+        """Test that LimitEnforcer uses default encoding when not specified."""
+        config = Config()
+        enforcer = LimitEnforcer(config)
+
+        # Should use default cl100k_base encoding
+        assert enforcer.counter.encoding_name == "cl100k_base"
