@@ -674,7 +674,7 @@
       "description": "Upload package to PyPI and verify installation from public package index.",
       "type": "release",
       "phase": "Phase 6: Release Preparation",
-      "status": "pending",
+      "status": "completed",
       "dependencies": [
         "TASK-018",
         "TASK-021"
@@ -742,12 +742,13 @@
     "TASK-016",
     "TASK-017",
     "TASK-018",
-    "TASK-021"
+    "TASK-021",
+    "TASK-022"
   ],
   "next_available": [
     "TASK-019",
     "TASK-020",
-    "TASK-022"
+    "TASK-023"
   ],
   "quality_gates": [
     {
