@@ -3,7 +3,7 @@
     "local": {
       "source": {
         "source": "directory",
-        "path": "/home/stefan/agents/plugins"
+        "path": "/home/stefan/agents/coding/plugins"
       }
     }
   },
